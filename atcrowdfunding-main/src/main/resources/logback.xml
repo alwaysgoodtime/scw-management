@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--文件名必须叫作logback.xml,才能扫描到-->
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!--	class后面可以改成FileAppender，意思是输出到一个文件中，现在是输出到控制台上	-->
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+        </encoder>
+        <!--	设置输出的格式	 35 表示太长会截取类名，不超过35个字符-->
+    </appender>
+
+    <!--设置log日志的级别，开发阶段设置成debug，生产阶段设置成warn或error，
+    因为部署后，log日志写到文件中，如果日志写得太多，太占空间，可能影响服务器性能-->
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+        <!--对前文的设置做引用，让appender的设置生效	-->
+    </root>
+
+</configuration>

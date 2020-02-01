@@ -1,0 +1,6 @@
+# Project exclude paths
+/atcrowdfunding-bean/target/
+/atcrowdfunding-common/target/
+/atcrowdfunding-main/target/
+/atcrowdfunding-manager-api/target/
+/atcrowdfunding-manager-impl/target/
