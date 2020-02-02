@@ -24,9 +24,11 @@
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 
-	<!-- 开启SpringMVC高级模式 -->
+
+	<!-- 开启SpringMVC高级模式,支持注解 -->
 	<mvc:annotation-driven />
 	<!-- 放行静态资源访问 -->
+    <!--	还有另一种方式，就是用mvc:resources ...-->
 	<mvc:default-servlet-handler />
 
 </beans>

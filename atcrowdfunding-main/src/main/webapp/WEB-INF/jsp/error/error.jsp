@@ -1,16 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
   User: goodtime
-  Date: 2020/2/1
-  Time: 8:15 下午
+  Date: 2020/2/2
+  Time: 1:24 下午
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>页面维护中</title>
 </head>
 <body>
-    <jsp:forward page="/index"></jsp:forward>
+    <h1>页面维护中，请稍后重试</h1>
 </body>
 </html>

@@ -1,16 +1,10 @@
 <%--
   Created by IntelliJ IDEA.
   User: goodtime
-  Date: 2020/2/1
-  Time: 8:15 下午
+  Date: 2020/2/2
+  Time: 5:30 下午
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-    <jsp:forward page="/index"></jsp:forward>
-</body>
-</html>
+<link rel="stylesheet" href="${PATH}/static/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="${PATH}/static/css/font-awesome.min.css">
