@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <script src="static/jquery/jquery-2.1.1.min.js"></script>
+    <title>js</title>
+</head>
+<body>
+    <button id="testBind" onclick="button()"></button>
+    -------------------------------------------
+    <button id="test" onclick="alert($('#testBind').click())"></button>
+
+    <hr/>
+
+    onclick是事件
+    click()是方法
+
+    <script>
+
+        $("#testBind").click(function () {
+            alert("haha");
+        })
+
+
+        function button(){
+            alert("heihei");
+        }
+    </script>
+</body>
+</html>

@@ -7,6 +7,18 @@ public class TAdmin {
 
     private String userpswd;
 
+    @Override
+    public String toString() {
+        return "TAdmin{" +
+                "id=" + id +
+                ", loginacct='" + loginacct + '\'' +
+                ", userpswd='" + userpswd + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", createtime='" + createtime + '\'' +
+                '}';
+    }
+
     private String username;
 
     private String email;

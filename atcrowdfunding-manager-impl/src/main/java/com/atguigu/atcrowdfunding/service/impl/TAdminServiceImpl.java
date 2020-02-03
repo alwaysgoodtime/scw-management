@@ -6,12 +6,14 @@ import com.atguigu.atcrowdfunding.mapper.TAdminMapper;
 import com.atguigu.atcrowdfunding.service.TAdminService;
 import com.atguigu.atcrowdfunding.util.Const;
 import com.atguigu.atcrowdfunding.util.MD5Util;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.LoginException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,5 +69,25 @@ public class TAdminServiceImpl implements TAdminService{
 //        正常返回
         return  tAdmin;
 
+    }
+
+    public PageInfo<TAdmin> listTAdminPage(Map<String, Object> queryMap) {
+
+        Logger log = LoggerFactory.getLogger(TAdminServiceImpl.class);
+
+        //通过查询所有用户，然后用PageHelper分页
+
+        TAdminExample tAdminExample = new TAdminExample();
+
+        List<TAdmin> tAdmins = adminMapper.selectByExample(tAdminExample);
+
+        PageInfo<TAdmin> pageInfo = new PageInfo<TAdmin>(tAdmins,5);//用分页类封装返回的结果
+        // 5是导航页，也就是最多有5个页面，和pagesize不一样，pagesize是每页固定显示5个数据
+        // 对于mysql就是调用limit而已
+
+
+        log.debug("pageInfo={}",pageInfo);
+
+        return pageInfo;
     }
 }

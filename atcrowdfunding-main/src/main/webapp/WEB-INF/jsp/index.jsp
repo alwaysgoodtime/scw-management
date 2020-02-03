@@ -873,8 +873,6 @@
 </div><!-- /.container -->
 <%--静态包含，抽取公共不常变的东西--%>
 <%@include file="/WEB-INF/jsp/common/script.jsp"%>
-<script src="${PATH}/static/script/docs.min.js"></script>
-<script src="${PATH}/static/script/back-to-top.js"></script>
 <script>
     $(".thumbnail img").css("cursor", "pointer");
     $(".thumbnail img").click(function () {

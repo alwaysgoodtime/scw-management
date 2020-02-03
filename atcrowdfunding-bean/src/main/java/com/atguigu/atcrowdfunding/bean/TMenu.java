@@ -1,5 +1,8 @@
 package com.atguigu.atcrowdfunding.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TMenu {
     private Integer id;
 
@@ -10,6 +13,17 @@ public class TMenu {
     private String icon;
 
     private String url;
+
+    private List<TMenu> childMenu = new ArrayList<TMenu>();//注意：一定要new，否则默认值是个空指针，
+    //后续不好调用，从数据库查也无法查到
+
+    public List<TMenu> getChildMenu() {
+        return childMenu;
+    }
+
+    public void setChildMenu(List<TMenu> childMenu) {
+        this.childMenu = childMenu;
+    }
 
     public Integer getId() {
         return id;

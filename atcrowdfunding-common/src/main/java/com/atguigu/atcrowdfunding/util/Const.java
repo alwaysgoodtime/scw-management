@@ -10,6 +10,12 @@ public class Const {
 	public static final String MESSAGE = "message";
 	public static final String USERPSWD = "userpswd";
 	public static final String LOGINACCT = "loginacct";
+	public static final String MENU_LIST = "menuList";
+	public static final String CURRENT_PAGE = "currentPage";
+	public static final String PAGE_SIZE = "pageSize";
+	public static final String PAGE_INFO = "pageInfo";
+	public static final String CONDITION = "condition";
+
 
 
 	public static final String LOGIN_LOGINACCT_ERROR = "用户名称不存在!";
