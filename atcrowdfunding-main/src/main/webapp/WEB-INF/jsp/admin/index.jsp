@@ -15,8 +15,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <%@include file="/WEB-INF/jsp/common/script.jsp" %>
     <%@include file="/WEB-INF/jsp/common/css.jsp" %>
+    <link rel="stylesheet" href="${PATH}/static/css/doc.min.css">
     <style>
         .tree li {
             list-style-type: none;
@@ -50,17 +51,21 @@
                         <div class="form-group has-feedback">
                             <div class="input-group">
                                 <div class="input-group-addon">查询条件</div>
-                                <input class="form-control has-success" name="condition" type="text" placeholder="请输入查询条件">
+                                <input class="form-control has-success" name="condition" type="text"
+                                       placeholder="请输入查询条件" value="${condition}">
+                                <%--回写查询条件--%>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-warning" id="query" onclick="$('#queryForm').submit()"><i class="glyphicon glyphicon-search"></i>查询
+                        <button type="button" class="btn btn-warning" id="query" onclick="$('#queryForm').submit()"><i
+                                class="glyphicon glyphicon-search"></i>查询
                         </button>
                     </form>
                     <button type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i
                             class=" glyphicon glyphicon-remove"></i> 删除
                     </button>
                     <button type="button" class="btn btn-primary" style="float:right;"
-                            onclick="window.location.href='${PATH}/admin/add'"><i class="glyphicon glyphicon-plus"></i> 新增
+                            onclick="window.location.href='${PATH}/admin/add'"><i class="glyphicon glyphicon-plus"></i>
+                        新增
                     </button>
                     <br>
                     <hr style="clear:both;">
@@ -80,7 +85,6 @@
                             <%--items一定记得加el表达式的${}括号--%>
                             <c:forEach items="${pageInfo.list}" var="TAdmin" varStatus="s">
                                 <tr>
-
                                     <td>${s.index}</td>
                                     <td><input type="checkbox"></td>
                                     <td>${TAdmin.loginacct}</td>
@@ -91,7 +95,7 @@
                                                 class=" glyphicon glyphicon-check"></i></button>
                                         <button type="button" class="btn btn-primary btn-xs"><i
                                                 class=" glyphicon glyphicon-pencil"></i></button>
-                                        <button type="button" class="btn btn-danger btn-xs"><i
+                                        <button type="button"  adminId="${TAdmin.id}" class="deleteButton btn btn-danger btn-xs"><i
                                                 class=" glyphicon glyphicon-remove"></i></button>
                                     </td>
                                 </tr>
@@ -106,17 +110,18 @@
                                         </c:if>
                                         <c:if test="${!pageInfo.isFirstPage}">
                                             <li class="active"><a
-                                                    href="${PATH}/admin/index?currentPage=${pageInfo.pageNum-1}">上一页</a>
+                                                    href="${PATH}/admin/index?currentPage=${pageInfo.pageNum-1}&condition=${condition}">上一页</a>
                                             </li>
                                         </c:if>
                                         <c:forEach items="${pageInfo.navigatepageNums}" var="i">
                                             <c:if test="${i == pageInfo.pageNum}">
                                                 <li class="active"><a
-                                                        href="${PATH}/admin/index?currentPage=${i}">${i}<span
+                                                        href="${PATH}/admin/index?currentPage=${i}&condition=${condition}">${i}<span
                                                         class="sr-only">(current)</span></a></li>
                                             </c:if>
                                             <c:if test="${i != pageInfo.pageNum}">
-                                                <li><a href="${PATH}/admin/index?currentPage=${i}">${i}</a></li>
+                                                <li><a href="${PATH}/admin/index?currentPage=${i}&condition=${condition}">${i}</a>
+                                                </li>
                                             </c:if>
                                         </c:forEach>
                                         <c:if test="${pageInfo.isLastPage}">
@@ -124,13 +129,12 @@
                                         </c:if>
                                         <c:if test="${!pageInfo.isLastPage}">
                                             <li class="active"><a
-                                                    href="${PATH}/admin/index?currentPage=${pageInfo.nextPage}">下一页</a>
+                                                    href="${PATH}/admin/index?currentPage=${pageInfo.nextPage}&condition=${condition}">下一页</a>
                                             </li>
                                         </c:if>
                                     </ul>
                                 </td>
                             </tr>
-
                             </tfoot>
                         </table>
                     </div>
@@ -139,8 +143,6 @@
         </div>
     </div>
 </div>
-
-<%@include file="/WEB-INF/jsp/common/script.jsp" %>
 <script type="text/javascript">
     $(function () {
         $(".list-group-item").click(function () {
@@ -155,10 +157,21 @@
         });
     });
 
+    $(".deleteButton").click(function(){
+        var id = $(".deleteButton").attr("adminId");
+        console.log(id);
 
-    console.log(${pageInfo.list});
-    console.log(${pageInfo.list.size()});
-    //   打印到浏览器的控制台，类似于日志
+        layer.confirm('您确定要删除吗？',{
+            btn: ['确定','返回']},function(){
+            layer.msg('删除成功', {icon: 1},{time:1000});
+            window.location.href="${PATH}/admin/delete?id="+id;
+        }, function(index){
+            layer.close(index);
+        });
+    });
+
+
+
 </script>
 </body>
 </html>

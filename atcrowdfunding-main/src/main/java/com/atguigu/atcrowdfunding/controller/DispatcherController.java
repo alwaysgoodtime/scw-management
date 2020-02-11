@@ -73,6 +73,7 @@ public class DispatcherController {
         List<TMenu>  listAllMenu = (List<TMenu>) session.getAttribute(Const.MENU_LIST);
         log.debug("取到的listAllMenu={}",listAllMenu);
         //如果多次刷新后台主页面，总是要进行查询所有菜单，所以执行一个判断，减少数据库访问次数
+        //塞sidebar的数据，并放到session中，方便其他用户使用
         if(listAllMenu == null){
             log.debug("看看返回的值={}",menuService.listAllMenu());
             listAllMenu = menuService.listAllMenu();

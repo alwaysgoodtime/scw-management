@@ -79,8 +79,25 @@ public class TAdminServiceImpl implements TAdminService{
 
         TAdminExample tAdminExample = new TAdminExample();
 
+        String condition = (String)queryMap.get(Const.CONDITION);
+
+
+        //默认值是""，不用模糊查询,注意condition的条件，因为我们给它的默认值是""，而且转换成object后
+        //再转回String时，都不等于""了，所以判断其长度即可
+        if(condition.length() != 0){
+            //这是三个字段的模糊查询，注意写法！！！
+            tAdminExample.createCriteria().andLoginacctLike("%"+condition+"%");
+            TAdminExample.Criteria criteria2 = tAdminExample.createCriteria();
+            TAdminExample.Criteria criteria3 = tAdminExample.createCriteria();
+            criteria2.andUsernameLike("%"+condition+"%");
+            criteria3.andEmailLike("%"+condition+"%");
+            tAdminExample.or(criteria2);
+            tAdminExample.or(criteria3);
+        }
+
         List<TAdmin> tAdmins = adminMapper.selectByExample(tAdminExample);
 
+        log.debug("我就看看",tAdmins);
         PageInfo<TAdmin> pageInfo = new PageInfo<TAdmin>(tAdmins,5);//用分页类封装返回的结果
         // 5是导航页，也就是最多有5个页面，和pagesize不一样，pagesize是每页固定显示5个数据
         // 对于mysql就是调用limit而已
@@ -89,5 +106,10 @@ public class TAdminServiceImpl implements TAdminService{
         log.debug("pageInfo={}",pageInfo);
 
         return pageInfo;
+    }
+
+    public void deleteById(String id) {
+        int deleteId = Integer.parseInt(id);
+        adminMapper.deleteByPrimaryKey(deleteId);
     }
 }

@@ -14,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +29,9 @@ public class TAdminController {
     @Autowired
     private TAdminService tadminService;
 
+    Logger log = LoggerFactory.getLogger(TAdminController.class);
+
+
     //    返回用户维护主页面，分页查出所有数据；同时承担模糊查询的功能
 //    后台页面，不同于登录注册的页面，所有写到manager-impl包里
 //    设置请求默认值，保证分页效果
@@ -36,8 +41,6 @@ public class TAdminController {
                             @RequestParam(value = Const.CONDITION, required = false,defaultValue = "") String condition,
                             Model model) {
         //表单提交的任何数据类型都是字符串类型,SpringMVC定义了转换器,将字符串转化为我们方法参数的各种类型.我们也可以实现自定义的转换器以实现自定义的参数类型转换
-
-        Logger log = LoggerFactory.getLogger(TAdminController.class);
 
         log.debug("condition条件={}",condition);
 
@@ -50,9 +53,15 @@ public class TAdminController {
 //        pageinfo是pagehelper封装当前页数据的，注意不是pagehelper。
         PageInfo<TAdmin> pageInfo = tadminService.listTAdminPage(queryMap);
         model.addAttribute(Const.PAGE_INFO, pageInfo);
-//      采用转发，保证查询条件提交后，刷新时不会显示表单重复提交
+//      没有解决表单重复提交
+        model.addAttribute(Const.CONDITION,condition);
         return "/admin/index";
     }
 
-
+    @RequestMapping("/admin/delete")
+    public String userDelete(String id){
+        log.debug("id={}",id);
+        tadminService.deleteById(id);
+        return "forward:/admin/index";
+    }
 }

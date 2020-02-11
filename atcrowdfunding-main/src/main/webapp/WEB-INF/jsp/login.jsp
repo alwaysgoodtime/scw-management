@@ -26,7 +26,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <div><a class="navbar-brand" href="${PATH}/static/index.jsp" style="font-size:32px;">尚筹网-创意产品众筹平台</a></div>
+            <div><a class="navbar-brand" href="${PATH}/index" style="font-size:32px;">尚筹网-创意产品众筹平台</a></div>
         </div>
     </div>
 </nav>
@@ -60,9 +60,20 @@
                 <a href="reg.html">我要注册</a>
             </label>
         </div>
-            <button type="submit" class="btn btn-lg btn-success btn-block">登录</button>
+            <button type="button" onclick="doLogin()" class="btn btn-lg btn-success btn-block">登录</button>
     </form>
 </div>
 <%@include file="/WEB-INF/jsp/common/script.jsp"%>
+<script>
+<%--    用户简单的表单校验和弹窗，如果没有输入用户名，或者用户名输入的都是空格，直接弹窗，返回false，如果成了，正常提交--%>
+        function doLogin(){
+            var username = $("#inputSuccess").val();
+            if($.trim(username) == ""){
+                layer.msg("用户名为空，请输入",{time:2000,icon:5});
+                return false;
+            }
+            $(".form-signin").submit();
+        };
+</script>
 </body>
 </html>

@@ -18,7 +18,6 @@
     <%@include file="/WEB-INF/jsp/common/css.jsp"%>
     <link rel="stylesheet" href="${PATH}/static/css/login.css">
     <style>
-
     </style>
 </head>
 <body>

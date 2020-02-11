@@ -16,5 +16,8 @@ public interface TAdminService {
     TAdmin getTAdminByLogin(Map<String, Object> adminMap) throws Exception;
 
     PageInfo<TAdmin> listTAdminPage(Map<String, Object> queryMap);
+
+    void deleteById(String id);
+
 //  如果无法解决包的导入，需要在pom中配置一下
 }

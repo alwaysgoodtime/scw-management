@@ -16,6 +16,7 @@ public class ContextListener implements ServletContextListener {
 
     Logger log = LoggerFactory.getLogger(ContextListener.class);
 
+    //加载了PATH这个常量在servletContext中，方便jsp中调用
     public void contextInitialized(ServletContextEvent sce) {
         log.debug("开始监听");
         ServletContext servletContext = sce.getServletContext();

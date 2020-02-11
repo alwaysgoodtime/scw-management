@@ -6,27 +6,6 @@
     <display-name>atcrowdfunding-main</display-name>
     <!-- Tomcat在创建web项目时，会先读取web.xml   -->
 
-
-    <!-- 创建Spring IOC容器 -->
-    <!-- needed for ContextLoaderListener -->
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:/spring/spring-*.xml</param-value>
-    </context-param>
-
-    <!-- Bootstraps the root web application context before servlet initialization -->
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    <!-- 这个是spring框架实现的监听器，会读取此页面所有的<context-param>中的内容，从而让其中的servcie、dao等类的代理让spring接管-->
-
-    <!-- 自定义一个listern类，监听servletcontext。在servletcontext加载时加载一个代表上下文环境的常量
-      从而让代码更加规范-->
-    <listener>
-        <listener-class>com.atguigu.atcrowdfunding.listener.ContextListener</listener-class>
-    </listener>
-
-
     <!-- 字符编码过滤器 -->
     <filter>
         <filter-name>CharacterEncodingFilter</filter-name>
@@ -60,12 +39,34 @@
     </filter-mapping>
 
 
+
+    <!-- 创建Spring IOC容器 -->
+    <!-- needed for ContextLoaderListener -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:/spring/spring-*.xml</param-value>
+    </context-param>
+
+    <!-- Bootstraps the root web application context before servlet initialization -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!-- 这个是spring框架实现的监听器，会读取此页面所有的<context-param>中的内容，从而让其中的servcie、dao等类的代理让spring接管-->
+
+    <!-- 自定义一个listern类，监听servletcontext。在servletcontext加载时加载一个代表上下文环境的常量
+      从而让代码更加规范-->
+    <listener>
+        <listener-class>com.atguigu.atcrowdfunding.listener.ContextListener</listener-class>
+    </listener>
+
+
     <!-- 核心控制器 -->
     <!-- The front controller of this Spring Web application, responsible for handling all application requests -->
     <servlet>
         <servlet-name>springDispatcherServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
+            <!--指定springmvc配置文件位置-->
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath*:/spring/springmvc.xml</param-value>
         </init-param>
@@ -76,6 +77,8 @@
     <servlet-mapping>
         <servlet-name>springDispatcherServlet</servlet-name>
         <url-pattern>/</url-pattern>
+<!--        /*和/都是拦截所有请求，但/*还会拦截jsp页面，所以用/，它不会拦截.jsp-->
+<!--        *.jsp默认是tomcat处理，而非springMVC处理-->
     </servlet-mapping>
 
     <!-- 设置欢迎页面，也就是项目默认打开的第一个页面 -->
