@@ -27,4 +27,6 @@ public interface TRolePermissionMapper {
     int updateByPrimaryKeySelective(TRolePermission record);
 
     int updateByPrimaryKey(TRolePermission record);
+
+    void insertByPermissionAndRoleId(@Param("permissionIds")List<Integer> permissionIds,@Param("roleId")Integer roleId);
 }

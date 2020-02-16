@@ -1,18 +1,22 @@
 package com.atguigu.atcrowdfunding.controller;
 
 import com.atguigu.atcrowdfunding.bean.TAdmin;
+import com.atguigu.atcrowdfunding.bean.TRole;
 import com.atguigu.atcrowdfunding.service.TAdminService;
+import com.atguigu.atcrowdfunding.service.TRoleService;
 import com.atguigu.atcrowdfunding.util.Const;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +33,10 @@ public class TAdminController {
     @Autowired
     private TAdminService tadminService;
 
-    Logger log = LoggerFactory.getLogger(TAdminController.class);
+    @Autowired
+    private TRoleService tRoleService;
+
+   Logger log = LoggerFactory.getLogger(TAdminController.class);
 
 
     //    返回用户维护主页面，分页查出所有数据；同时承担模糊查询的功能
@@ -58,10 +65,52 @@ public class TAdminController {
         return "/admin/index";
     }
 
+    @PreAuthorize("hasRole('PM - 项目经理')")
     @RequestMapping("/admin/delete")
     public String userDelete(String id){
         log.debug("id={}",id);
         tadminService.deleteById(id);
         return "forward:/admin/index";
+    }
+
+    @RequestMapping("/admin/assign")
+    public String assign(Integer id, Model model){
+        //查询所有角色
+        List<TRole> tRoles = tRoleService.listAll();
+        //查询当前ID的所有角色ID
+        List<Integer> tAdminRoles = tRoleService.getRoleIdByAdminId(id);
+        //已分配的角色放一个list
+        List<TRole> assigned = new ArrayList<TRole>();
+        List<TRole> unassigned = new ArrayList<TRole>();
+
+        for (TRole a: tRoles
+             ) {
+            if(tAdminRoles.contains(a.getId())){
+                assigned.add(a);
+            }else {
+                unassigned.add(a);
+            }
+        }
+        //把得到的数据用model放到请求域中
+        model.addAttribute("assigned",assigned);
+        model.addAttribute("unassigned",unassigned);
+        //未分配的角色放一个list
+        log.debug("已分配={}",assigned);
+        log.debug("未分配={}",unassigned);
+        return "/admin/assignRole";
+    }
+
+    @ResponseBody
+    @RequestMapping("admin/doAssign")
+    public String doassign(Integer adminId,Integer[] roleId){
+        tRoleService.saveAdminAndRoleRelationship(adminId,roleId);
+        return "ok";
+    }
+
+    @ResponseBody
+    @RequestMapping("admin/undoAssign")
+    public String undoassign(Integer adminId,Integer[] roleId){
+        tRoleService.deleteAdminAndRoleRelationship(adminId,roleId);
+        return "ok";
     }
 }

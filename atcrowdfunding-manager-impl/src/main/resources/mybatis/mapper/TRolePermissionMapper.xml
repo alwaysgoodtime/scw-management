@@ -6,6 +6,29 @@
     <result column="roleid" jdbcType="INTEGER" property="roleid" />
     <result column="permissionid" jdbcType="INTEGER" property="permissionid" />
   </resultMap>
+
+<!--  void insertByPermissionAndRoleId(@Param("permissionIds")List<Integer> permissionIds,Integer roleId);-->
+
+  <insert id="insertByPermissionAndRoleId">
+    insert into t_role_permission(permissionid,roleid) value
+    <foreach collection="permissionIds" item="permissionid" separator=",">
+      (#{permissionid},#{roleId})
+    </foreach>
+  </insert>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

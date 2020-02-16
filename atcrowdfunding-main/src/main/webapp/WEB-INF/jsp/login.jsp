@@ -33,13 +33,14 @@
 
 <div class="container">
 
-    <form class="form-signin" role="form" action="${PATH}/doLogin" method="post">
+    <form class="form-signin" role="form" action="${PATH}/login" method="post">
             <h2 class="form-signin-heading"><i class="glyphicon glyphicon-log-in"></i>用户登录</h2>
-            <c:if test="${not empty message}">
+            <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
                 <div>
-                    ${message}
+                    ${SPRING_SECURITY_LAST_EXCEPTION.message}
                 </div>
             </c:if>
+            <input type="hidden" name="${_csrf.paremeterName}" value="${_csrf.token}"/>
         <div class="form-group has-success has-feedback">
             <input type="text" class="form-control" id="inputSuccess" name="loginacct" value="${loginacct}"placeholder="请输入登录账号" autofocus>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -50,7 +51,7 @@
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" value="remember-me">记住我
+                <input type="checkbox" name="remember-me">记住我
             </label>
             <br>
             <label>

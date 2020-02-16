@@ -63,21 +63,20 @@ public class DispatcherController {
         //然后写回存入session，加载到sidebar.jsp当中，这样除了主页面，后台的其他页面也能通过导入sidebar.jsp
         //来导入真实的分类
 
-
 //      判断session是否为空，如果为空，说明用户长时间不操作（session默认时间为30分钟），或者没有登录，重定向到登录页面即可
 // 同时避免后续报空指针异常
-        if(null == session){
+        if (null == session) {
             return "redirect:/login";
         }
 
-        List<TMenu>  listAllMenu = (List<TMenu>) session.getAttribute(Const.MENU_LIST);
-        log.debug("取到的listAllMenu={}",listAllMenu);
+        List<TMenu> listAllMenu = (List<TMenu>) session.getAttribute(Const.MENU_LIST);
+        log.debug("取到的listAllMenu={}", listAllMenu);
         //如果多次刷新后台主页面，总是要进行查询所有菜单，所以执行一个判断，减少数据库访问次数
         //塞sidebar的数据，并放到session中，方便其他用户使用
-        if(listAllMenu == null){
-            log.debug("看看返回的值={}",menuService.listAllMenu());
+        if (listAllMenu == null) {
+            log.debug("看看返回的值={}", menuService.listAllMenu());
             listAllMenu = menuService.listAllMenu();
-            session.setAttribute(Const.MENU_LIST,listAllMenu);
+            session.setAttribute(Const.MENU_LIST, listAllMenu);
             log.info("存数据，去后台主页面");
             return "main";
         }
@@ -87,42 +86,43 @@ public class DispatcherController {
     }
 
 
-    //    从登录页面发起登录post请求
-    @RequestMapping("/doLogin")
-    public String doLogin(String loginacct, String userpswd, Model map, HttpSession httpSession) {
-        Map<String, Object> adminMap = new HashMap<String, Object>();
-        log.debug("loginacct={},uesrpswd={}", loginacct, userpswd);
-        adminMap.put(Const.LOGINACCT, loginacct);
-        adminMap.put(Const.USERPSWD, userpswd);
-        //    查询失败的话，显示错误信息
-        try {
-            TAdmin tAdmin = adminService.getTAdminByLogin(adminMap);
-            //      查询成功，存session，跳转后台主页面main.jsp
-            httpSession.setAttribute(Const.LOGIN_ADMIN, loginacct);
-            //  如果return放外面，捕获完异常还是会return
-//       为了避免表单重复提交，不能用转发，否则一刷新，还要提交一遍表单 return "main"; 这里用了重定向
-            return "redirect:/main";
-        } catch (Exception e) {
-            map.addAttribute(Const.MESSAGE, e.getMessage());
-            //回显用户名
-            map.addAttribute(Const.LOGINACCT, loginacct);
-            log.debug("找不到用户啦");
-            return "login";
-            //    重新转发到login页面登录
-        }
-    }
+//    //    从登录页面发起登录post请求
+//    @RequestMapping("/doLogin")
+//    public String doLogin(String loginacct, String userpswd, Model map, HttpSession httpSession) {
+//        Map<String, Object> adminMap = new HashMap<String, Object>();
+//        log.debug("loginacct={},uesrpswd={}", loginacct, userpswd);
+//        adminMap.put(Const.LOGINACCT, loginacct);
+//        adminMap.put(Const.USERPSWD, userpswd);
+//        //    查询失败的话，显示错误信息
+//        try {
+//            TAdmin tAdmin = adminService.getTAdminByLogin(adminMap);
+//            //      查询成功，存session，跳转后台主页面main.jsp
+//            httpSession.setAttribute(Const.LOGIN_ADMIN, loginacct);
+//            //  如果return放外面，捕获完异常还是会return
+////       为了避免表单重复提交，不能用转发，否则一刷新，还要提交一遍表单 return "main"; 这里用了重定向
+//            return "redirect:/main";
+//        } catch (Exception e) {
+//            map.addAttribute(Const.MESSAGE, e.getMessage());
+//            //回显用户名
+//            map.addAttribute(Const.LOGINACCT, loginacct);
+//            log.debug("找不到用户啦");
+//            return "login";
+//            //    重新转发到login页面登录
+//        }
+//    }
 
-    //   注销功能
-    @RequestMapping("/logout")
-    public String logout(HttpSession httpSession) {
-        if (httpSession != null) {
-//            session默认保存时间是30分钟，如果用户登录后30分钟未执行任何操作，可能session就清空了，
-//            所以先判断是否为空，否则会空指针异常
-            httpSession.removeAttribute(Const.LOGIN_ADMIN);
-            httpSession.invalidate();
-        }
-//       转发是不会改变地址的，所以如果客户刷新页面，相当于一直在注销，不如直接重定向到主页,后面要写相对于上下文路径的地址
-//        这里相当于重新发了一次请求
-        return "redirect:/index";
-    }
+//    //   注销功能
+//    @RequestMapping("/logout")
+//    public String logout(HttpSession httpSession) {
+//        if (httpSession != null) {
+////            session默认保存时间是30分钟，如果用户登录后30分钟未执行任何操作，可能session就清空了，
+////            所以先判断是否为空，否则会空指针异常
+//            httpSession.removeAttribute(Const.LOGIN_ADMIN);
+//            httpSession.invalidate();
+//        }
+////       转发是不会改变地址的，所以如果客户刷新页面，相当于一直在注销，不如直接重定向到主页,后面要写相对于上下文路径的地址
+////        这里相当于重新发了一次请求
+//        return "redirect:/index";
+//    }
+//}
 }

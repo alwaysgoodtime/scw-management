@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>页面维护中</title>
+    <title>您的权限不够</title>
 </head>
 <body>
-    <h1>页面维护中，请稍后重试</h1>
+    <h1>您的权限不够，请联系管理员</h1>
 </body>
 </html>

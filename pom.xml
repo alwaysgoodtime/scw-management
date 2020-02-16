@@ -28,7 +28,6 @@
         <commons-math3.version>3.6.1</commons-math3.version>
         <commons.fileupload>1.3.2</commons.fileupload>
         <commons-email.version>1.4</commons-email.version>
-
         <!-- junit -->
         <junit.version>4.12</junit.version>
         <!-- 时间日期操作 -->
@@ -66,8 +65,32 @@
         <servlet-api.version>2.5</servlet-api.version>
         <jsp-api.version>2.2</jsp-api.version>
         <jstl.version>1.2</jstl.version>
+        <springframework.serurity>4.2.10.RELEASE</springframework.serurity>
+
     </properties>
-    <!-- 依赖管理 -->
+    <!--让所有子项目都依赖它-->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${springframework.serurity}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${springframework.serurity}</version>
+        </dependency>
+        <!-- 标签库 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${springframework.serurity}</version>
+        </dependency>
+
+    </dependencies>
+
+
+    <!-- 依赖管理，其中父工程并不会把依赖传递给子工程，而只是锁定版本号 -->
     <dependencyManagement>
         <dependencies>
             <!-- 公共依赖 -->
@@ -309,8 +332,6 @@
                 <artifactId>jstl</artifactId>
                 <version>${jstl.version}</version>
             </dependency>
-
-
         </dependencies>
     </dependencyManagement>
 

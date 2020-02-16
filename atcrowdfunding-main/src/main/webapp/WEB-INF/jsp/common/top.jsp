@@ -6,22 +6,28 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <div><a class="navbar-brand" style="font-size:32px;" href="#">众筹平台 - 控制面板</a></div>
+            <div><a class="navbar-brand" style="font-size:32px;" href="${PATH}/main">众筹平台 - 控制面板</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li style="padding-top:8px;">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
-                            <i class="glyphicon glyphicon-user"></i>${loginAdmin}<span class="caret"></span>
+                        <button type="button" class="btn btn-default btn-success dropdown-toggle"
+                                data-toggle="dropdown">
+                            <i class="glyphicon glyphicon-user"></i>
+                            <%--                         通过springSecurity来取对象，实际上是通过principle的getname方法取的，取的是UsernamePasswordAuthenticationToken中的值--%>
+                            <security:authentication property="name"/>
+                            <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#"><i class="glyphicon glyphicon-cog"></i>个人设置</a></li>
                             <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
                             <li class="divider"></li>
+                            <%--如果开启了csrf，退出系统必须发送post提交才行，没有开启就无所谓了（超链接发送的是get请求）  --%>
                             <li><a href="${PATH}/logout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
                         </ul>
                     </div>

@@ -3,6 +3,8 @@ package com.atguigu.atcrowdfunding.mapper;
 import com.atguigu.atcrowdfunding.bean.TPermission;
 import com.atguigu.atcrowdfunding.bean.TPermissionExample;
 import java.util.List;
+
+import com.atguigu.atcrowdfunding.bean.TRole;
 import org.apache.ibatis.annotations.Param;
 
 public interface TPermissionMapper {
@@ -27,4 +29,6 @@ public interface TPermissionMapper {
     int updateByPrimaryKeySelective(TPermission record);
 
     int updateByPrimaryKey(TPermission record);
+
+    List<TPermission> listPermissionByAdminId(Integer id);
 }

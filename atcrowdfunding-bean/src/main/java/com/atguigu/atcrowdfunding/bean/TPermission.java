@@ -1,5 +1,8 @@
 package com.atguigu.atcrowdfunding.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TPermission {
     private Integer id;
 
@@ -10,6 +13,16 @@ public class TPermission {
     private String icon;
 
     private Integer pid;
+
+    private List<TPermission> children = new ArrayList<TPermission>();
+
+    public List<TPermission> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<TPermission> children) {
+        this.children = children;
+    }
 
     public Integer getId() {
         return id;

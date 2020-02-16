@@ -11,4 +11,12 @@ import java.util.List;
 public interface TMenuService {
 
     List<TMenu> listAllMenu();
+
+    List<TMenu> listAllTree();
+
+    void addMenu(TMenu menu);
+
+    void deleteMenuById(Integer id);
+
+    void updateMenu(TMenu tMenu);
 }

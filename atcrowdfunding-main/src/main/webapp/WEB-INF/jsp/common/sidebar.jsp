@@ -10,15 +10,16 @@
 <div class="col-sm-3 col-md-2 sidebar">
     <div class="tree">
         <ul style="padding-left:0px;" class="list-group">
-            <c:forEach items="${menuList}" var="menu" >
+            <c:forEach items="${menuList}" var="menu">
                 <c:if test="${empty menu.childMenu}">
-                <li class="list-group-item tree-closed">
-                    <a href="${PATH}${menu.url}"><i class="${menu.icon}"></i>${menu.name}</a>
-                </li>
+                    <li class="list-group-item tree-closed">
+                        <a href="${PATH}${menu.url}"><i class="${menu.icon}"></i>${menu.name}</a>
+                    </li>
                 </c:if>
                 <c:if test="${not empty menu.childMenu}">
                     <li class="list-group-item tree-closed">
-                        <span><i class="${menu.icon}"></i>${menu.name}<span class="badge" style="float:right">${menu.childMenu.size()}</span></span>
+                        <span><i class="${menu.icon}"></i>${menu.name}<span class="badge"
+                                                                            style="float:right">${menu.childMenu.size()}</span></span>
                         <ul style="margin-top:10px;display:none;">
                             <c:forEach items="${menu.childMenu}" var="child">
                                 <li style="height:30px;">

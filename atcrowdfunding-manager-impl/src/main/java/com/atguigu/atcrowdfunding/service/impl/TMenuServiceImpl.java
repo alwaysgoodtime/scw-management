@@ -57,4 +57,23 @@ public class TMenuServiceImpl implements TMenuService {
         return tMenuList;
 
     }
+
+    public List<TMenu> listAllTree() {
+        return menuMapper.selectByExample(null);//查找全部数据，直接返回，用作ztree的显示
+    }
+
+    public void addMenu(TMenu tMenu){
+        Logger log = LoggerFactory.getLogger(TMenuServiceImpl.class);
+        log.debug("传入的参数为{}",tMenu);
+        menuMapper.insert(tMenu);
+    }
+
+    public void deleteMenuById(Integer id) {
+        menuMapper.deleteByPrimaryKey(id);
+    }
+
+    public void updateMenu(TMenu tMenu) {
+        menuMapper.updateByPrimaryKey(tMenu);
+    }
+
 }

@@ -91,9 +91,9 @@
                                     <td>${TAdmin.username}</td>
                                     <td>${TAdmin.email}</td>
                                     <td>
-                                        <button type="button" class="btn btn-success btn-xs"><i
+                                        <button type="button" adminId="${TAdmin.id}" class="btn btn-success btn-xs assignButton"><i
                                                 class=" glyphicon glyphicon-check"></i></button>
-                                        <button type="button" class="btn btn-primary btn-xs"><i
+                                        <button type="button"   class="btn btn-primary btn-xs"><i
                                                 class=" glyphicon glyphicon-pencil"></i></button>
                                         <button type="button"  adminId="${TAdmin.id}" class="deleteButton btn btn-danger btn-xs"><i
                                                 class=" glyphicon glyphicon-remove"></i></button>
@@ -159,8 +159,6 @@
 
     $(".deleteButton").click(function(){
         var id = $(".deleteButton").attr("adminId");
-        console.log(id);
-
         layer.confirm('您确定要删除吗？',{
             btn: ['确定','返回']},function(){
             layer.msg('删除成功', {icon: 1},{time:1000});
@@ -168,6 +166,11 @@
         }, function(index){
             layer.close(index);
         });
+    });
+
+    $(".assignButton").click(function(){
+        var id = $(".assignButton").attr("adminId");
+        window.location.href = "${PATH}/admin/assign?id="+$('.assignButton').attr('adminId');
     });
 
 

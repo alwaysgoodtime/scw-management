@@ -28,7 +28,7 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!-- RESTFul风格，将POST请求转换为PUT或DELETE请求 -->
+    <!-- RESTFul风格过滤器将POST请求转换为PUT或DELETE请求 -->
     <filter>
         <filter-name>HiddenHttpMethodFilter</filter-name>
         <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
@@ -38,20 +38,29 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!--spring安全框架过滤器入口-->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 
-    <!-- 创建Spring IOC容器 -->
-    <!-- needed for ContextLoaderListener -->
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:/spring/spring-*.xml</param-value>
-    </context-param>
+<!--    &lt;!&ndash; 创建Spring IOC容器 &ndash;&gt;-->
+<!--    &lt;!&ndash; needed for ContextLoaderListener &ndash;&gt;-->
+<!--    <context-param>-->
+<!--        <param-name>contextConfigLocation</param-name>-->
+<!--        <param-value>classpath*:/spring/spring-*.xml</param-value>-->
+<!--    </context-param>-->
 
-    <!-- Bootstraps the root web application context before servlet initialization -->
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    <!-- 这个是spring框架实现的监听器，会读取此页面所有的<context-param>中的内容，从而让其中的servcie、dao等类的代理让spring接管-->
+<!--    &lt;!&ndash; Bootstraps the root web application context before servlet initialization &ndash;&gt;-->
+<!--    <listener>-->
+<!--        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
+<!--    </listener>-->
+<!--    &lt;!&ndash; 这个是spring框架实现的监听器，会读取此页面所有的<context-param>中的内容，从而让其中的servcie、dao等类的代理让spring接管&ndash;&gt;-->
 
     <!-- 自定义一个listern类，监听servletcontext。在servletcontext加载时加载一个代表上下文环境的常量
       从而让代码更加规范-->
@@ -60,7 +69,7 @@
     </listener>
 
 
-    <!-- 核心控制器 -->
+    <!-- 核心控制器 或者说，创建springmvc的容器，核心控制器就在其中 -->
     <!-- The front controller of this Spring Web application, responsible for handling all application requests -->
     <servlet>
         <servlet-name>springDispatcherServlet</servlet-name>
@@ -68,7 +77,11 @@
         <init-param>
             <!--指定springmvc配置文件位置-->
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath*:/spring/springmvc.xml</param-value>
+            <param-value>classpath*:/spring/springmvc.xml
+                          classpath*:/spring/spring-*.xml
+            <!--这样，让所有的组件都被springmvc容器管理，关闭spring容器，这是为了让springmvc能识别所有的springsecurity注解
+            默认的springsecurity注解由spring管理，是无法处理controller注解的-->
+            </param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

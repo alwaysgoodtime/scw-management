@@ -3,17 +3,21 @@ package com.atguigu.atcrowdfunding.controller;
 import com.atguigu.atcrowdfunding.bean.TRole;
 import com.atguigu.atcrowdfunding.service.TRoleService;
 import com.atguigu.atcrowdfunding.util.Const;
+import com.atguigu.atcrowdfunding.util.Datas;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,5 +61,50 @@ public class TRoleController {
 
         return role;
     }
+
+    //自动封装到实体类中
+    @ResponseBody
+    @PreAuthorize("hasRole('PM - 项目经理')")//方法细粒度的控制，保证此方法只有项目经理能使用
+    @RequestMapping("/role/add")
+    public String add(TRole tRole){
+        tRoleService.addRole(tRole);
+        return "ok";//注意：这里是异步请求，不能转发到别的页面，那边还在等返回值，所以返回些状态码或者ok即可
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/role/update")
+    public String update(TRole tRole){
+        tRoleService.updateRole(tRole);
+        return "ok";
+    }
+
+    @ResponseBody
+    @RequestMapping("/role/delete")
+    public String delete(TRole tRole){
+        tRoleService.deleteRole(tRole);
+        return "ok";
+    }
+
+    //回显角色所拥有的权限
+    @ResponseBody
+    @RequestMapping("role/permission")
+    public List<Integer> rolePermission(Integer roleId){
+        List<Integer> a = tRoleService.getPermissionIdByRoleId(roleId);
+        return a;
+    }
+
+
+    //给角色分配权限
+    @ResponseBody
+    @RequestMapping("/role/modifyRoleAndPermissionRelationship")
+    public String modifyRoleAndPermissionRelationship(Datas datas,Integer roleId){
+        List<Integer> permissionIds = datas.getIds();
+        tRoleService.modifyRoleAndPermissionRelationship(permissionIds,roleId);
+        return "ok";
+    }
+
+
+
 
 }

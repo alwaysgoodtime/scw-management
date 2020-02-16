@@ -27,4 +27,9 @@ public interface TRoleMapper {
     int updateByPrimaryKeySelective(TRole record);
 
     int updateByPrimaryKey(TRole record);
+
+    /**
+     * @param id 根据用户id，根据中间表，联合查询Role
+     */
+    List<TRole> listRoleByAdminId(Integer id);
 }

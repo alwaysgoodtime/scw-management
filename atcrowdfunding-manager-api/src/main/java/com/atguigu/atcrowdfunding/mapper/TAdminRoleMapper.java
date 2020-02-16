@@ -3,6 +3,8 @@ package com.atguigu.atcrowdfunding.mapper;
 import com.atguigu.atcrowdfunding.bean.TAdminRole;
 import com.atguigu.atcrowdfunding.bean.TAdminRoleExample;
 import java.util.List;
+
+import com.atguigu.atcrowdfunding.bean.TRole;
 import org.apache.ibatis.annotations.Param;
 
 public interface TAdminRoleMapper {
@@ -27,4 +29,8 @@ public interface TAdminRoleMapper {
     int updateByPrimaryKeySelective(TAdminRole record);
 
     int updateByPrimaryKey(TAdminRole record);
+
+    List<Integer> getRoleIdByAdminId(Integer id);
+
+    void deleteAdminAndRoleRelation(@Param("adminId")Integer adminId, @Param("roleIds")Integer[] roleId);
 }
