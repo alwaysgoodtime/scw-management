@@ -42,7 +42,12 @@ public class AtcrowdFundingSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {//管理登录、注销
         //super.configure(http);取消默认的
-        http.authorizeRequests().antMatchers("/static/**","/welcome.jsp").permitAll().anyRequest().authenticated();//剩下都需要认证
+        http.authorizeRequests().antMatchers("/static/**","/welcome.jsp")
+                .permitAll()
+                .anyRequest()
+                .authenticated()//剩下都需要认证
+                .and()
+                .headers().frameOptions().disable();
         // /login.jsp==POST  用户登陆请求发给Security
         http.formLogin().loginPage("/login")//登录页的映射是login
                 .usernameParameter("loginacct")//用户名

@@ -20,7 +20,7 @@
         <!--        我配的是本地机器上的-->
         <!-- mvn mybatis-generator:generate 配置数据库位置 ，配置虚拟机上的mysql ip地址；不采用安全协议连接，否则无法逆向生成 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql:///atcrowdfunding190401?useSSL=false"
+                        connectionURL="jdbc:mysql://172.18.0.2:3306/atcrowdfunding190401?useSSL=false"
                         userId="goodtime" password="haojianyu">
         </jdbcConnection>
 

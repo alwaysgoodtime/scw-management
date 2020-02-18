@@ -49,6 +49,8 @@
     </filter-mapping>
 
 
+
+
 <!--    &lt;!&ndash; 创建Spring IOC容器 &ndash;&gt;-->
 <!--    &lt;!&ndash; needed for ContextLoaderListener &ndash;&gt;-->
 <!--    <context-param>-->
@@ -93,6 +95,7 @@
 <!--        /*和/都是拦截所有请求，但/*还会拦截jsp页面，所以用/，它不会拦截.jsp-->
 <!--        *.jsp默认是tomcat处理，而非springMVC处理-->
     </servlet-mapping>
+
 
     <!-- 设置欢迎页面，也就是项目默认打开的第一个页面 -->
     <welcome-file-list>
