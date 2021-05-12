@@ -65,7 +65,7 @@
         <servlet-api.version>2.5</servlet-api.version>
         <jsp-api.version>2.2</jsp-api.version>
         <jstl.version>1.2</jstl.version>
-        <springframework.serurity>4.2.10.RELEASE</springframework.serurity>
+        <springframework.serurity>5.2.10.RELEASE</springframework.serurity>
 
     </properties>
     <!--让所有子项目都依赖它-->
